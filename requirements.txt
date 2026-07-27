@@ -1,0 +1,68 @@
+# ============================================================
+# AI Legal & Government Document QA System
+# requirements.txt
+# Python 3.12+
+# ============================================================
+
+# ── Core scientific stack ──────────────────────────────────
+numpy>=1.26.0
+scipy>=1.13.0
+
+# ── PDF processing ─────────────────────────────────────────
+pdfplumber>=0.11.0           # Text-based PDF extraction
+pdf2image>=1.17.0            # PDF → PIL images for OCR
+# NOTE: pdf2image requires Poppler binaries on Windows.
+# Download from: https://github.com/oschwartz10612/poppler-windows/releases/
+# Add the bin/ folder to your PATH before running.
+
+# ── DOCX processing ────────────────────────────────────────
+python-docx>=1.1.0
+
+# ── OCR ────────────────────────────────────────────────────
+easyocr>=1.7.1               # Primary OCR (multilingual: EN + TA + HI)
+# OR pytesseract (fallback) — requires Tesseract binary installed separately
+# pytesseract>=0.3.13
+# Install Tesseract: https://github.com/UB-Mannheim/tesseract/wiki
+
+# ── Language detection ─────────────────────────────────────
+langdetect>=1.0.9
+langid>=1.1.6                # Fallback language detector
+
+# ── Translation ────────────────────────────────────────────
+# Option A: IndicTrans2 (best quality for Indian languages)
+# Install separately (not on PyPI):
+#   pip install git+https://github.com/AI4Bharat/IndicTransToolkit.git
+# Also requires:
+#   pip install transformers torch sentencepiece sacremoses
+
+# Option B: Google Translate (lightweight fallback, no API key)
+deep-translator>=1.11.4
+
+# ── Embeddings ─────────────────────────────────────────────
+sentence-transformers>=3.0.0  # SentenceTransformer wrapper (BAAI/bge-m3)
+torch>=2.3.0                  # PyTorch backend for transformers
+transformers>=4.44.0           # HuggingFace transformers (reader + IndicTrans2)
+sentencepiece>=0.2.0          # Tokenizer for multilingual models
+
+# ── Vector search ──────────────────────────────────────────
+faiss-cpu>=1.8.0              # FAISS in-memory vector store (CPU edition)
+# If CUDA GPU is available, replace with:
+# faiss-gpu>=1.8.0
+
+# ── LLM readers ────────────────────────────────────────────
+# HuggingFace (default, local, no API key)
+# Already covered by: transformers, torch (above)
+
+# OpenAI (optional — set OPENAI_API_KEY env variable)
+# openai>=1.30.0
+
+# Google Gemini (optional — set GOOGLE_API_KEY env variable)
+# google-generativeai>=0.7.0
+
+# ── Image processing (used by EasyOCR + pdf2image) ─────────
+Pillow>=10.3.0
+
+# ── Utilities ──────────────────────────────────────────────
+python-dotenv>=1.0.0          # Optional: load API keys from .env file
+tqdm>=4.66.0                  # Progress bars
+regex>=2024.5.15              # Advanced regex (used by tokenisers)

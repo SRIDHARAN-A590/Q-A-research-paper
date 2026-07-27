@@ -1,0 +1,8 @@
+.venv/
+__pycache__/
+models/
+temp/
+logs/
+poppler-26.02.0/
+*.pyc
+.env
