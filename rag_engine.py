@@ -266,16 +266,11 @@ class RAGEngine:
             question=question_en,
         )
 
-        # Dynamically calculate min and max lines based on page count
-        min_lines = max(7, 5 + (total_pages * 2))
-        max_lines = max(10, min_lines + (total_pages * 3))
-        system_prompt = config.RAG_SYSTEM_PROMPT.format(min_lines=min_lines, max_lines=max_lines)
-
         logger.debug("RAG prompt (first 300 chars): %s …", prompt[:300])
 
         try:
             with Timer("RAG full generation", logger):
-                answer = self._reader.generate(prompt, system_prompt=system_prompt)
+                answer = self._reader.generate(prompt, system_prompt=config.RAG_SYSTEM_PROMPT)
         except Exception as exc:
             logger.error("\n[!] LLM Generation failed: %s", exc)
             cprint(f"\n  [ERROR] {exc}", colour="red")

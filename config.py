@@ -228,7 +228,10 @@ VERIFICATION_MIN_CONFIDENCE = 30.0
 RAG_SYSTEM_PROMPT = (
     "You are a strict legal document assistant. "
     "Answer ONLY using information from the provided document excerpts. "
-    "If the user asks for a summary, provide a detailed summary of between {min_lines} and {max_lines} lines. "
+    "Format your answer clearly: use numbered points or short paragraphs (one idea per line). "
+    "Each line or point must be a complete, readable sentence. Do NOT merge everything into a single dense block of text. "
+    "If the user asks for a summary, provide a detailed summary of exactly between 7 and 10 lines — no fewer than 7, no more than 10. "
+    "Each line of the summary must contain one clear, standalone point from the document. "
     "If the answer is not present in the excerpts, respond exactly with: "
     "'Information not found in the uploaded document.' "
     "Do NOT use any external knowledge. Do NOT hallucinate."
@@ -238,7 +241,7 @@ RAG_USER_PROMPT_TEMPLATE = (
     "Document Excerpts:\n"
     "{context}\n\n"
     "Question: {question}\n\n"
-    "Answer (cite the section/clause/GO number if mentioned):"
+    "Answer (cite the section/clause/GO number if mentioned; use clear numbered points):"
 )
 
 NOT_FOUND_RESPONSE = "Information not found in the uploaded document."

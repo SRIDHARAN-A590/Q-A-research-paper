@@ -134,11 +134,24 @@ def print_qa_result(
     # Answer
     print_separator("─", 70)
     cprint("  Generated Answer:", colour="green", bold=True)
+
+    def _print_answer_lines(text: str, colour: str, bold: bool = False, prefix: str = "  ") -> None:
+        """Print each line of an answer on its own line for readability."""
+        lines = [ln.strip() for ln in text.strip().splitlines() if ln.strip()]
+        if not lines:
+            cprint(f"{prefix}{text}", colour=colour, bold=bold)
+            return
+        for line in lines:
+            cprint(f"{prefix}{line}", colour=colour, bold=bold)
+
     if detected_lang != "en":
-        cprint(f"  [English] : {answer_en}", colour="white")
-        cprint(f"  [{lang_name}]: {answer_native}", colour="green", bold=True)
+        cprint(f"\n  [English Answer]:", colour="white", bold=True)
+        _print_answer_lines(answer_en, colour="white")
+        cprint(f"\n  [{lang_name} Answer]:", colour="green", bold=True)
+        _print_answer_lines(answer_native, colour="green", bold=True)
     else:
-        cprint(f"  {answer_native}", colour="green", bold=True)
+        print()
+        _print_answer_lines(answer_native, colour="green", bold=True)
 
     # Verification
     print_separator("─", 70)
