@@ -42,10 +42,10 @@ os.environ["HUGGINGFACE_HUB_CACHE"]= str(_HF_DIR / "hub")
 os.environ["SENTENCE_TRANSFORMERS_HOME"] = str(MODELS_DIR / "sentence_transformers")
 # Torch hub
 os.environ["TORCH_HOME"]          = str(MODELS_DIR / "torch")
-# Enable hf-transfer for maximum download speed (Rust-based, 5-10× faster)
-os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
+# Enable high-performance Xet transfer (replaces deprecated hf_transfer)
+os.environ["HF_XET_HIGH_PERFORMANCE"]            = "1"
 # Suppress symlink warning on Windows
-os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"]    = "1"
 
 # ─────────────────────────────────────────────
 # POPPLER PATH (Windows only)

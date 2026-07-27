@@ -79,13 +79,22 @@ class HuggingFaceReader:
             try:
                 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
                 import torch
-                logger.info("Loading HuggingFace reader model: %s …", config.HF_READER_MODEL)
-                cls._tokenizer = AutoTokenizer.from_pretrained(config.HF_READER_MODEL)
-                cls._model = AutoModelForSeq2SeqLM.from_pretrained(config.HF_READER_MODEL)
+                _cache_dir = str(config.MODELS_DIR / "huggingface" / "hub")
+                _device    = "cuda" if torch.cuda.is_available() else "cpu"
+                logger.info(
+                    "Loading HuggingFace reader model: %s … (device=%s, cache=%s)",
+                    config.HF_READER_MODEL, _device, _cache_dir,
+                )
+                cls._tokenizer = AutoTokenizer.from_pretrained(
+                    config.HF_READER_MODEL, cache_dir=_cache_dir
+                )
+                cls._model = AutoModelForSeq2SeqLM.from_pretrained(
+                    config.HF_READER_MODEL, cache_dir=_cache_dir
+                )
                 cls._model.eval()
-                if torch.cuda.is_available():
+                if _device == "cuda":
                     cls._model = cls._model.to("cuda")
-                logger.info("HuggingFace reader ready.")
+                logger.info("HuggingFace reader ready on %s.", _device)
             except ImportError as exc:
                 raise ImportError(
                     "transformers and torch are required for HuggingFace backend."
