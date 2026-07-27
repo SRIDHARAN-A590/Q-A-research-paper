@@ -62,11 +62,13 @@ class EmbeddingModel:
         ]:
             try:
                 from sentence_transformers import SentenceTransformer
-                logger.info("Loading embedding model: %s …", model_name)
+                import torch
+                _device = "cuda" if torch.cuda.is_available() else "cpu"
+                logger.info("Loading embedding model: %s … (device=%s)", model_name, _device)
                 with Timer(f"Load {model_name}", logger):
                     self._model = SentenceTransformer(
                         model_name,
-                        device="cpu",
+                        device=_device,
                         cache_folder=str(config.MODELS_DIR / "sentence_transformers"),
                     )
                 self._model_name = model_name

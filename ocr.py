@@ -218,9 +218,17 @@ class EasyOCREngine:
             logger.info("Initialising EasyOCR reader for: %s", langs)
             easyocr_model_dir = str(config.MODELS_DIR / "easyocr")
 
+            # Auto-detect GPU — use it if available, else fall back to CPU
+            try:
+                import torch
+                _use_gpu = torch.cuda.is_available()
+            except ImportError:
+                _use_gpu = False
+            logger.info("EasyOCR device: %s", "GPU" if _use_gpu else "CPU")
+
             try:
                 cls._readers[key] = easyocr.Reader(
-                    langs, gpu=False,
+                    langs, gpu=_use_gpu,
                     model_storage_directory=easyocr_model_dir,
                     quantize=False,
                 )
@@ -242,7 +250,7 @@ class EasyOCREngine:
                     logger.info("Retrying EasyOCR reader [%s] after cleanup…", key)
                     try:
                         cls._readers[key] = easyocr.Reader(
-                            langs, gpu=False,
+                            langs, gpu=_use_gpu,
                             model_storage_directory=easyocr_model_dir,
                             quantize=False,
                         )
@@ -258,7 +266,7 @@ class EasyOCREngine:
                 if "en" not in cls._readers:
                     logger.info("Loading English-only EasyOCR reader as fallback.")
                     cls._readers["en"] = easyocr.Reader(
-                        config.EASYOCR_LANG_ENGLISH, gpu=False,
+                        config.EASYOCR_LANG_ENGLISH, gpu=_use_gpu,
                         model_storage_directory=easyocr_model_dir,
                         quantize=False,
                     )
