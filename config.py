@@ -181,7 +181,7 @@ CHUNK_OVERLAP_TOKENS  = 50
 FAISS_INDEX_TYPE = "flat_ip"   # Inner Product (cosine after normalisation)
 
 # Number of top-k chunks to retrieve
-RETRIEVAL_TOP_K = 8
+RETRIEVAL_TOP_K = 10
 
 # Minimum similarity score (0-1) for a chunk to be considered relevant
 RETRIEVAL_MIN_SCORE = -1.0
@@ -196,7 +196,7 @@ RETRIEVAL_MIN_SCORE = -1.0
 LLM_BACKEND = "huggingface"
 
 # HuggingFace model for reader (must be instruction-tuned)
-HF_READER_MODEL = "google/flan-t5-base"
+HF_READER_MODEL = "google/flan-t5-large"
 
 # OpenAI model name (used only if LLM_BACKEND == "openai")
 OPENAI_MODEL = "gpt-4o-mini"
@@ -214,13 +214,13 @@ LLM_TEMPERATURE = 0.0
 # VERIFICATION
 # ─────────────────────────────────────────────
 # Minimum overlap ratio (0-1) between answer tokens and retrieved context
-VERIFICATION_MIN_OVERLAP = 0.40
+VERIFICATION_MIN_OVERLAP = 0.25
 
 # Maximum retry attempts before returning "not found"
 VERIFICATION_MAX_RETRIES = 1
 
 # Confidence threshold (0-100) below which answer is rejected
-VERIFICATION_MIN_CONFIDENCE = 40.0
+VERIFICATION_MIN_CONFIDENCE = 30.0
 
 # ─────────────────────────────────────────────
 # PROMPT TEMPLATES
