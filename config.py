@@ -83,7 +83,7 @@ SUPPORTED_EXTENSIONS = {".pdf", ".txt", ".docx"}
 # OCR SETTINGS
 # ─────────────────────────────────────────────
 # Primary OCR backend: "easyocr" | "tesseract"
-OCR_BACKEND = "easyocr"
+OCR_BACKEND = "tesseract"
 
 # EasyOCR CANNOT mix Tamil, Hindi, and English in a single reader.
 # Each script group must be loaded separately:
@@ -132,7 +132,7 @@ TRANSLATION_MAX_CHARS = 2000
 # EMBEDDING MODEL
 # ─────────────────────────────────────────────
 # Multilingual dense retrieval model
-EMBEDDING_MODEL_NAME = "BAAI/bge-m3"
+EMBEDDING_MODEL_NAME = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 
 # Fallback if BGE-M3 is unavailable
 EMBEDDING_FALLBACK_MODEL = "intfloat/multilingual-e5-large"
@@ -181,10 +181,10 @@ CHUNK_OVERLAP_TOKENS  = 50
 FAISS_INDEX_TYPE = "flat_ip"   # Inner Product (cosine after normalisation)
 
 # Number of top-k chunks to retrieve
-RETRIEVAL_TOP_K = 10
+RETRIEVAL_TOP_K = 5
 
 # Minimum similarity score (0-1) for a chunk to be considered relevant
-RETRIEVAL_MIN_SCORE = -1.0
+RETRIEVAL_MIN_SCORE = 0.30
 
 # ─────────────────────────────────────────────
 # LLM / GENERATION
@@ -214,13 +214,13 @@ LLM_TEMPERATURE = 0.0
 # VERIFICATION
 # ─────────────────────────────────────────────
 # Minimum overlap ratio (0-1) between answer tokens and retrieved context
-VERIFICATION_MIN_OVERLAP = 0.25
+VERIFICATION_MIN_OVERLAP = 0.40
 
 # Maximum retry attempts before returning "not found"
 VERIFICATION_MAX_RETRIES = 1
 
 # Confidence threshold (0-100) below which answer is rejected
-VERIFICATION_MIN_CONFIDENCE = 30.0
+VERIFICATION_MIN_CONFIDENCE = 40.0
 
 # ─────────────────────────────────────────────
 # PROMPT TEMPLATES

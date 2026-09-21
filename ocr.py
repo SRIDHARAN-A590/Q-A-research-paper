@@ -332,6 +332,12 @@ class TesseractEngine:
             Tuple of (extracted_text, mean_confidence).
         """
         pytesseract = _import_pytesseract()
+        
+        # Configure local tesseract if installed in project folder
+        local_tess = config.BASE_DIR / "tesseract" / "tesseract.exe"
+        if local_tess.exists():
+            pytesseract.pytesseract.tesseract_cmd = str(local_tess)
+
         data = pytesseract.image_to_data(
             image,
             lang=config.TESSERACT_LANG,
